@@ -1,0 +1,103 @@
+.boundaries-dev-logger {
+
+    background: rgb( 20,20,20 ) ;
+    color: rgb( 14,192,42 ) ;
+    display: inline-block;
+    padding: 1.2vh 1.75vw!important;
+    position: absolute!important;
+    top: 0;
+    left: 0;
+    border-bottom-right-radius: 10px;
+}
+
+.boundaries-dev-logger.close {
+
+    background: transparent;
+}
+
+.boundaries-dev-logger .boundaries-open {
+
+    display: none;
+}
+
+.boundaries-dev-logger.close .boundaries-open {
+
+    display: block;
+}
+
+.boundaries-dev-logger .open-content {
+    transform: scaleY(1) ;
+    padding-left: 8px;
+    transition: transform .12s ease-in-out;
+}
+
+.boundaries-dev-logger.close .open-content {
+
+    transform: scaleY(0) ;
+}
+
+.boundaries-dev-logger p {
+
+    margin: .85vh 0;
+    font-size: 16px;
+    letter-spacing: .05rem;
+}
+
+.boundaries-dev-logger h2 {
+
+    color: #fff;
+    margin-bottom: 20px;
+    font-size: 18px;
+    letter-spacing: .07rem;
+}
+
+.boundaries-dev-logger h2 em {
+
+    font-weight: 400;
+}
+
+.boundaries-dev-logger .boundaries-close {
+
+    cursor: pointer;
+    font-size: 26px;
+    position: absolute;
+    top: -12px;
+    left: -25px;
+    color: rgb( 172, 21 , 56 );
+    font-weight: 900;
+    padding: 0 .2vw;
+    transition: .13s ease-in-out all ;
+}
+
+.boundaries-dev-logger .boundaries-close:hover {
+
+    transform: scale( 1.2 ) ;
+    color: red;
+}
+
+.boundaries-dev-logger .boundaries-open {
+
+    width: 16px;
+    height: 16px;
+    background: rgb( 14,192,42 ) ;
+    border-radius: 50%;
+    cursor: pointer;
+    position: absolute;
+    left: 12px;
+    top: 12px;
+}
+
+.boundaries-dev-logger .boundaries-open:hover {
+
+    transform: scale( 1.2 ) ;
+    background: rgb(19, 158, 40) ;
+}
+
+.boundaries-dev-logger .boundaries-open::after {
+
+    content: "Boundaries" ;
+    position: absolute;
+    left: calc( 100% + 5px );
+    font-size: 16px;
+    transform: translateY(-15%) ;
+}

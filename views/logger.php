@@ -38,9 +38,9 @@ use Boundaries\Functions\PaamayimClass as StaticClass ;
 </div>
 
 <style>
-    <?php require PATH_STYLE . '/logger.css' ; ?>
+    <?php include PATH_STYLE . '/logger.css' ; ?>
 </style>
 
 <script>
-    <?php require PATH_SCRIPT . '/logger.js' ; ?>
+    <?php include PATH_SCRIPT . '/logger.js' ; ?>
 </script>

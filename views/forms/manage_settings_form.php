@@ -32,3 +32,15 @@
     </div>
 
 </div>
+
+<style>
+
+<?php include PATH_STYLE . '/settings-form.css' ; ?>
+
+</style>
+
+<script>
+
+<?php include PATH_SCRIPT . '/settings-form.js' ; ?>
+
+</script>

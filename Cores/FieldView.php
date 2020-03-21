@@ -17,6 +17,7 @@ class FieldView {
     private $sleepTimeout ;
     private $parser ;
     private $unity ;
+    private $isLogger ;
 
     public function __construct() {
 
@@ -28,6 +29,7 @@ class FieldView {
         $this->timeBlock = $this->data['time-block'] ;
         $this->sleepTimeout = $this->data['sleep-timeout'] ;
         $this->maxConnect = $this->data['max-connect'] ;
+        $this->isLogger = $this->data['is-logger'] ;
 
         $this->unity = $this->parser->getOptionDatas()[ 'unity_boundaries_field_time_block' ] ;
     }
@@ -35,6 +37,11 @@ class FieldView {
     static public function getStaticClass() {
 
         return StaticClass::class ;
+    }
+
+    public function getIsLogger(): bool {
+
+        return $this->isLogger ;
     }
 
     public function getIsDev(): bool {

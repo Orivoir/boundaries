@@ -23,4 +23,9 @@ interface BuildFieldCallbackInterface {
      */
     static public function sleepTimeoutCb( array $args ): void ;
 
+    /**
+     * callback build field enabled logger from form admin page
+     */
+    static public function isLoggerCb( array $args ): void ;
+
 }

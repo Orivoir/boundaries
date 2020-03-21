@@ -3,10 +3,6 @@ namespace Boundaries\Interfaces;
 
 use Boundaries\Interfaces\BuildFieldCallbackInterface;
 
-/**
- * @TODO: OptionAPI , should be use as Trait.
- */
-
 interface OptionApiInterface extends BuildFieldCallbackInterface {
 
     /**

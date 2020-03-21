@@ -1,7 +1,9 @@
 <?php
-namespace Boundaries\Cores;
+namespace Boundaries\Cores ;
 
-class ParseOptionsSettings {
+use Boundaries\Interfaces\InternalParserInterface ;
+
+class ParseOptionsSettings implements InternalParserInterface {
 
     /**
      * @var optionDatas
@@ -17,17 +19,35 @@ class ParseOptionsSettings {
 
     /**
      * @var isDev
-     * state checkbox: "use development mode"
+     * state checkbox: "enable development mode"
      */
     private $isDev ;
+
+    /**
+     * @var isLogger
+     * state checkebox: "enable logger from admin form"
+     */
+    private $isLogger ;
 
     public function __construct() {
 
         $this->optionDatas = get_option(  'boundaries_options' ) ;
         $this->parseDatas = [] ;
         $this->isDev = isset( $this->optionDatas['boundaries_field_is_dev'] ) ;
+        $this->isLogger = isset( $this->optionDatas['boundaries_field_is_logger'] ) ;
 
         $this->parseDatas['is-dev'] = $this->isDev ;
+        $this->parseDatas['is-logger'] = $this->isLogger ;
+    }
+
+    public function getIsDev(): bool {
+
+        return $this->isDev ;
+    }
+
+    public function getIsLogger(): bool {
+
+        return $this->isLogger ;
     }
 
     public function getOption() {
@@ -54,11 +74,10 @@ class ParseOptionsSettings {
         return $timeBlockValue ;
     }
 
-
     /**
     * @see InternalParserInterface
     */
-    public function parseTimeBlock(): self {
+    public function parseTimeBlock(): ?InternalParserInterface {
 
         $optionsSettings = $this->optionDatas ;
         $isDev = $this->isDev ;
@@ -92,7 +111,7 @@ class ParseOptionsSettings {
     /**
      * @see InternalParserInterface
      */
-    public function parseSleepTimeout(): self {
+    public function parseSleepTimeout(): ?InternalParserInterface {
 
         $optionsSettings = $this->optionDatas ;
         $isDev = $this->isDev ;
@@ -119,7 +138,7 @@ class ParseOptionsSettings {
     /**
      * @see InternalParserInterface
      */
-    private function parseMaxConnect(): self {
+    public function parseMaxConnect(): ?InternalParserInterface {
 
         $optionsSettings = $this->optionDatas ;
 

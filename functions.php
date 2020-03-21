@@ -26,6 +26,10 @@ class PaamayimClass implements OptionApiInterface, HooksInterface {
      */
     const ALREADY_REJECT = false ;
 
+    const SECOND = 1 ;
+    const MINUTE = 2 ;
+    const HOURS = 3 ;
+
     // unity time is used as UNIX timestamp
 
     const DEFAULT_TIMESTAMP_BLOCK = ( 1 * 60 * 60 * 3 ) ; // 3hours
@@ -52,16 +56,71 @@ class PaamayimClass implements OptionApiInterface, HooksInterface {
     static $maxTryConnect = self::DEFAULT_MAX_TRY_CONNECT ;
     static $sleepConnect = self::DEFAULT_SLEEP_CONNECT ;
 
+    /**
+     * for dynamic call of datas normalizers
+     * if absent you can use this magic method ^.^
+     */
+    static public function Zzzz( $val ) {
+
+        return $val ;
+    }
+
+    static public function showDescribeField( array $values ): void {
+
+        $normalizer = $values['is-time-value'] ? "convertTimestamp": "Zzzz" ;
+
+        ?>
+
+        <p class="description">
+            the standard value is
+            <strong>
+                <?= self::$normalizer( $values['default'] ) ?>
+            </strong>.
+        </p>
+
+        <p class="description">
+            the maximum recommanded is
+            <strong>
+                <?= self::$normalizer( $values['max'] ) ?>
+            </strong>.
+        </p>
+
+        <p class="description">
+            the minimum recommended value is
+            <strong>
+                <?= self::$normalizer( $values['min'] ) ?>
+            </strong>.
+        </p>
+        <?php
+    }
+
     // convert timestamp to bigger time unity for an render HTML
-    static public function convertTimestamp( int $unixTimestamp ): string {
+    static public function convertTimestamp(
+        int $unixTimestamp ,
+        int $unityTime = NULL
+    ): string {
+
+        if( !!$unityTime ) {
+
+            if( $unityTime === 1 ) {
+
+                return $unixTimestamp ;
+            } else if( $unityTime == 2 ) {
+
+                return ( (int) ($unixTimestamp / 60) ) ;
+            } else {
+
+                return ((int) ($unixTimestamp / 3600)) ;
+            }
+        }
 
         if( $unixTimestamp / 3600 >= 1 ) {
 
-            return ( $unixTimestamp / 3600 ) . ' hours' ;
+            return ( (int) ($unixTimestamp / 3600) ) . ' hours' ;
 
         } else if( $unixTimestamp / 60 >= 1 ) {
 
-            return ( $unixTimestamp / 60 ) . ' minutes'  ;
+            return ( (int) ($unixTimestamp / 60) ) . ' minutes'  ;
         }
 
         return $unixTimestamp . ' seconds' ;
@@ -271,9 +330,18 @@ class PaamayimClass implements OptionApiInterface, HooksInterface {
         // save field checkbox for switch state of development mode
         self::saveField(
             'isDev' ,
-            'switch state of development mode' ,
+            'enable development mode' ,
             'section_developers' ,
-            'is_dev'
+            'is_dev' ,
+            'boundaries-checkbox-is-dev'
+        ) ;
+
+        self::saveField(
+            'isLogger' ,
+            'enable logger from admin form' ,
+            'section_developers' ,
+            'is_logger' ,
+            'boundaries-checkbox-is-logger'
         ) ;
     }
 
@@ -322,7 +390,8 @@ class PaamayimClass implements OptionApiInterface, HooksInterface {
         string $nameField ,
         string $describe ,
         string $section ,
-        string $labelFor
+        string $labelFor ,
+        string $class2add = ""
     ): void {
 
         $name = 'boundaries_' . $nameField ;
@@ -343,7 +412,7 @@ class PaamayimClass implements OptionApiInterface, HooksInterface {
             // $args from callback build field
             [
                 'label_for' =>  $label ,
-                'class' => 'boundaries_row',
+                'class' => 'boundaries_row ' . $class2add ,
                 'boundaries_custom_data' => 'custom',
             ]
         ) ;
@@ -367,14 +436,6 @@ class PaamayimClass implements OptionApiInterface, HooksInterface {
                 'optionsPageHtml'
             ] // callback build content page
         ) ;
-    }
-
-    /**
-     * @see OptionApiInterface
-     */
-    static public function isDevCb( array $args ): void {
-
-        require PATH_VIEWS . '/fields/is_dev.php' ;
     }
 
     /**
@@ -405,6 +466,15 @@ class PaamayimClass implements OptionApiInterface, HooksInterface {
         require PATH_VIEWS . '/forms/manage_settings_form.php' ;
     }
 
+
+    /**
+     * @see OptionApiInterface
+     */
+    static public function isDevCb( array $args ): void {
+
+        require PATH_VIEWS . '/fields/is_dev.php' ;
+    }
+
     /**
      * @see OptionApiInterface
      */
@@ -427,5 +497,13 @@ class PaamayimClass implements OptionApiInterface, HooksInterface {
     static public function sleepTimeoutCb( array $args ): void {
 
         require PATH_VIEWS . '/fields/sleep_timeout.php' ;
+    }
+
+    /**
+     * @see OptionApiInterface
+     */
+    static public function isLoggerCb( array $args ): void {
+
+        require PATH_VIEWS . '/fields/is_logger.php' ;
     }
 }

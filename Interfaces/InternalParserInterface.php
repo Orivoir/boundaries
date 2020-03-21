@@ -1,5 +1,5 @@
 <?php
-namespace Boundaries\Interfaces;
+namespace Boundaries\Interfaces ;
 
 interface InternalParserInterface {
 
@@ -7,9 +7,18 @@ interface InternalParserInterface {
      * partial parser are internal parser
      */
 
-    public function parseTimeBlock(): self;
+    /**
+     * parse data of settings field for time lock authentication
+     */
+    public function parseTimeBlock(): ?InternalParserInterface ;
 
-    public function parseSleepTimeout(): self;
+    /**
+     * parse data of settings field for sleep timeout to authentication
+     */
+    public function parseSleepTimeout(): ?InternalParserInterface ;
 
-    public function parseMaxConnect(): self;
+    /**
+     * parse data of settings field for maximum attempt authentication before lock
+     */
+    public function parseMaxConnect(): ?InternalParserInterface ;
 }

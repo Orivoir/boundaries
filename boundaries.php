@@ -3,7 +3,7 @@ session_start() ;
 
 /**
  * Plugin Name: Admin Boundaries
- * Description: boundaries for form admin , mute error message and add try connect boundaries authentication
+ * Description: Boundaries is an implement of an security handler the targeting native gaps of admin form
  * Version: 0.1.0
  * Author: Samuel Gaborieau
  */
@@ -27,6 +27,7 @@ add_filter('login_errors' ,  [
 $datasOptions = ( new ParseOptions() )->parse() ;
 
 $isDev = $datasOptions['is-dev'] ;
+$isLogger = $datasOptions['is-logger'] ;
 
 // check if post datas admin form
 if(
@@ -67,7 +68,7 @@ if(
 }
 
 // for dev use
-if( StaticClass::isLoginPage() && $isDev ) {
+if( StaticClass::isLoginPage() && ( $isDev || $isLogger ) ) {
 
     // show logger after update session data
     require PATH_VIEWS . '/logger.php' ;
